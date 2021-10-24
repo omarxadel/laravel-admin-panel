@@ -14,7 +14,19 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return Company::all();
+        $companies = Company::all();
+        return view("companies.index", compact("companies"));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $this->authorize("create", Company::class);
+        return view("companies.create");
     }
 
     /**
@@ -25,7 +37,13 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        return Company::create($request->all());
+        $this->authorize("create", Company::class);
+        return Company::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "logo" => $request->logo,
+            "website" => $request->website,
+        ]);
     }
 
     /**
@@ -37,6 +55,18 @@ class CompanyController extends Controller
     public function show($id)
     {
         return Company::findOrFail($id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $company = Company::findOrFail($id);
+        return view("companies.edit", compact("company"));
     }
 
     /**
@@ -62,6 +92,7 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize("delete", Company::class);
         $Company = Company::findOrFail($id);
         $Company->delete();
 
