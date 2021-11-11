@@ -98,4 +98,9 @@ class CompanyController extends Controller
 
         return 204;
     }
+
+    public static function all()
+    {
+        return Company::all();
+    }
 }
