@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ForgetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,20 @@ Route::resources([
     "users" => UserController::class,
     "companies" => CompanyController::class,
 ]);
+
+Route::get("forget-password", [
+    ForgetPasswordController::class,
+    "showForgetPasswordForm",
+])->name("forget.password.get");
+Route::post("forget-password", [
+    ForgetPasswordController::class,
+    "submitForgetPasswordForm",
+])->name("password.email");
+Route::get("reset-password", [
+    ForgetPasswordController::class,
+    "showResetPasswordForm",
+])->name("reset.password.get");
+Route::post("reset-password", [
+    ForgetPasswordController::class,
+    "submitResetPasswordForm",
+])->name("reset.password.post");
