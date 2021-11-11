@@ -38,12 +38,14 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $this->authorize("create", Company::class);
-        return Company::create([
+        Company::create([
             "name" => $request->name,
             "email" => $request->email,
             "logo" => $request->logo,
             "website" => $request->website,
         ]);
+
+        return redirect("/companies");
     }
 
     /**
@@ -81,7 +83,7 @@ class CompanyController extends Controller
         $Company = Company::findOrFail($id);
         $Company->update($request->all());
 
-        return $Company;
+        return redirect("/companies");
     }
 
     /**
@@ -96,7 +98,7 @@ class CompanyController extends Controller
         $Company = Company::findOrFail($id);
         $Company->delete();
 
-        return 204;
+        return redirect("/companies");
     }
 
     public static function all()

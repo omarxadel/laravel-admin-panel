@@ -41,7 +41,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->authorize("create", User::class);
-        return User::create([
+        User::create([
             "firstname" => $request->firstname,
             "lastname" => $request->lastname,
             "email" => $request->email,
@@ -49,6 +49,8 @@ class UserController extends Controller
             "role" => $request->role,
             "password" => Hash::make($request->password),
         ]);
+
+        return redirect("/users");
     }
 
     /**
@@ -92,7 +94,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->update($filtered);
 
-        return $user;
+        return redirect("/users");
     }
 
     /**
@@ -106,7 +108,7 @@ class UserController extends Controller
         $this->authorize("delete", User::class);
         $user = User::findOrFail($id);
         $user->delete();
-        // TODO: Replace response with toast notification.
-        return 204;
+
+        return redirect("/users");
     }
 }
