@@ -44,6 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
+                                    @if(!empty($users) && $users->count())
                                     @foreach ($users as $user)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -78,8 +79,16 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="10">There are no data.</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                             </table>
+                            <div class="p-4 d-flex justify-content-center">
+                                {{ $users->render() }}
+                            </div>
                         </div>
                     </div>
                 </div>
